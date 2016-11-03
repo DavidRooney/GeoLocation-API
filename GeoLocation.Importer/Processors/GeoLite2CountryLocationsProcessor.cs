@@ -2,9 +2,7 @@
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 
 namespace GeoLocation.Importer.Processors
 {
@@ -15,9 +13,15 @@ namespace GeoLocation.Importer.Processors
         public GeoLite2CountryLocationsProcessor(IEnumerable<GeoLite2CountryLocationsDefinition> modelList)
         {
             this.ModelList = modelList;
+            this.elasticSearchEndpoint = ConfigurationManager.AppSettings["ElasticSearchEndpoint"];
+            this.elasticSearchDocumentGeoLiteCountryLocationUri = ConfigurationManager.AppSettings["ElasticSearchDocumentGeoLiteCountryLocationUri"];
         }
 
         private IEnumerable<GeoLite2CountryLocationsDefinition> ModelList { get; set; }
+
+        private readonly string elasticSearchEndpoint;
+
+        private readonly string elasticSearchDocumentGeoLiteCountryLocationUri;
 
         public bool Import()
         {
@@ -25,10 +29,10 @@ namespace GeoLocation.Importer.Processors
             {
                 // Insert into elasticsearch database
                 int inserted = 0;
-                var client = new RestClient("http://localhost:9200");
+                var client = new RestClient(this.elasticSearchEndpoint);
                 foreach (var item in this.ModelList)
                 {
-                    var request = new RestRequest("tla-elasticsearch-geo-location/geolitecountrylocation", Method.POST);
+                    var request = new RestRequest(this.elasticSearchDocumentGeoLiteCountryLocationUri, Method.POST);
                     request.RequestFormat = DataFormat.Json;
                     request.AddJsonBody(item);
                     var response = client.Execute(request);
