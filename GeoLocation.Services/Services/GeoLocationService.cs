@@ -1,11 +1,11 @@
-﻿using GeoLocation.Services.Models;
+﻿using GeoLocation.Services.Interfaces;
+using GeoLocation.Services.Models;
 using GeoLocation.Services.Settings;
 using Nest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace GeoLocation.Services.Services
 {
