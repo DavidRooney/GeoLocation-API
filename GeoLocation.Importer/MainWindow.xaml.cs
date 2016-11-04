@@ -64,5 +64,27 @@ namespace GeoLocation.Importer
 
             txtImportMessage.Text = message;
         }
+
+        private void DeleteElasticSearchIndex_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the index? This will delete all the GeoLite2 data.", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                ImportService service = new ImportService();
+                string message;
+                var success = service.DeleteElasticSearchIndex(out message);
+
+                if (success)
+                {
+                    txtImportMessage.Foreground = new SolidColorBrush(Colors.Green);
+                }
+                else
+                {
+                    txtImportMessage.Foreground = new SolidColorBrush(Colors.Red);
+                }
+
+                txtImportMessage.Text = message;
+            }
+        }
     }
 }

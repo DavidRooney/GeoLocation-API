@@ -67,7 +67,6 @@
     <Compile Include="IBaseProcessor.cs" />
     <Compile Include="Enums\ImportOptionEnum.cs" />
     <Compile Include="Models\GeoLite2Definitions.cs" />
-    <Compile Include="Models\NormalizedGeoLite2Model.cs" />
     <Compile Include="Processors\GeoLite2CountryBlockProcessor.cs" />
     <Compile Include="Processors\GeoLite2CountryLocationsProcessor.cs" />
     <Compile Include="Services\ImportService.cs" />

@@ -48,6 +48,11 @@ namespace GeoLocation.Importer.Services
             return success;
         }
 
+        public bool DeleteElasticSearchIndex(out string message)
+        {
+            return new GeoLite2CountryLocationsProcessor().DeleteIndex(out message);
+        }
+
         private bool ImportData(IBaseProcessor processor)
         {
             return processor.Import();

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeoLocation.Importer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="800">
+        Title="Geo Location Importer" Height="450" Width="800">
     <DockPanel Margin="10">
         <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,40,0,40">
             <Label FontWeight="Bold">Choose an import option:</Label>
@@ -21,10 +21,22 @@
             <TextBox Name="txtEditor" Width="700" Height="20" />
         </WrapPanel>
         <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
-            <Button Content="btnImport" Click="btnImport_Click" Width="75" Height="25" />
+            <Button Name="btnImport"  Content="Run Import" Click="btnImport_Click" Width="75" Height="25" />
         </WrapPanel>
         <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
             <TextBox Name="txtImportMessage" Width="700" Height="20" BorderThickness="0" TextAlignment="Center" />
         </WrapPanel>
+        <Border CornerRadius="6"
+                BorderBrush="Gray"
+                Background="IndianRed"
+                BorderThickness="1"
+                Padding="8">
+            <StackPanel>
+                <Label FontWeight="Bold">Potentially Dangerous Functions:</Label>
+                <WrapPanel Margin="30,0,0,0">
+                    <Button Name="DeleteElasticSearchIndex" Content="Delete Elasticsearch Index" Width="200" Height="25" Click="DeleteElasticSearchIndex_Click"></Button>
+                </WrapPanel>
+            </StackPanel>
+        </Border>
     </DockPanel>
 </Window>

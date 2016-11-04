@@ -1,4 +1,6 @@
-﻿using GeoLocation.Services.Settings;
+﻿using GeoLocation.Services.Models;
+using GeoLocation.Services.Settings;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,14 @@ namespace GeoLocation.Services.Services
 
         public string FetchCountryByIP(string ip)
         {
+            var node = new Uri(this.elasticSearchEndpoint);
+            var settings = new ConnectionSettings(node);
+            var client = new ElasticClient(settings);
+            var indexSettings = new IndexSettings();
+            indexSettings.NumberOfReplicas = 1;
+            indexSettings.NumberOfShards = 1;
+
+            var countryBlock = client.Search<GeoLiteCountryBlock>(s => s.Query(q => q.Wildcard(p => p.network, "213.122.160.156")));
 
             return "UK";
         }

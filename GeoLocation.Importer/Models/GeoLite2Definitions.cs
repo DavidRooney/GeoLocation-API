@@ -35,6 +35,10 @@ namespace GeoLocation.Importer.Models
         public GeoLite2CountryBlockDefinitionMap()
         {
             Map(m => m.network).Name("network");
+            Map(m => m.network_start_ip).Name("network_start_ip");
+            Map(m => m.network_last_ip).Name("network_last_ip");
+            Map(m => m.network_start_integer).Name("network_start_integer");
+            Map(m => m.network_last_integer).Name("network_last_integer");
             Map(m => m.geoname_id).Name("geoname_id");
             Map(m => m.registered_country_geoname_id).Name("registered_country_geoname_id");
             Map(m => m.represented_country_geoname_id).Name("represented_country_geoname_id");
@@ -46,6 +50,10 @@ namespace GeoLocation.Importer.Models
     public class GeoLite2CountryBlockDefinition
     {
         public string network { get; set; }
+        public string network_start_ip { get; set; }
+        public string network_last_ip { get; set; }
+        public string network_start_integer { get; set; }
+        public string network_last_integer { get; set; }
         public string geoname_id { get; set; }
         public string registered_country_geoname_id { get; set; }
         public string represented_country_geoname_id { get; set; }
