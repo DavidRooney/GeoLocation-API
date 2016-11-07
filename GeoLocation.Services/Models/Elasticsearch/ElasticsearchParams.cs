@@ -24,11 +24,14 @@ namespace GeoLocation.Services.Models.Elasticsearch
                             {
                                 Bool = new Bool
                                 {
-                                    //MustList = new List<Must>()
-                                    //{
-                                    //    new Must { Range = new Range { network_start_ip = new GreaterThanOrEquals { To = ip } } },
-                                    //    new Must { Range = new Range { network_last_ip = new LessThanOrEquals { From = ip } } }
-                                    //}
+                                    MustList = new MustList
+                                    {
+                                        List = new List<Must>()
+                                        {
+                                            new Must { Range = new Range { network_start_ip = new GreaterThanOrEquals { To = ip } } },
+                                            new Must { Range = new Range { network_last_ip = new LessThanOrEquals { From = ip } } }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -58,8 +61,7 @@ namespace GeoLocation.Services.Models.Elasticsearch
         [JsonProperty("must", NullValueHandling = NullValueHandling.Ignore)]
         public Must Must { get; set; }
 
-        //[JsonProperty("must", NullValueHandling = NullValueHandling.Ignore)]
-        //public IList<Must> MustList { get; set; }
+        public MustList MustList { get; set; }
 
         [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
         public Filter Filter { get; set; }
@@ -72,6 +74,12 @@ namespace GeoLocation.Services.Models.Elasticsearch
     {
         [JsonProperty("bool", NullValueHandling = NullValueHandling.Ignore)]
         public Bool Bool { get; set; }
+    }
+
+    public class MustList
+    {
+        [JsonProperty("must", NullValueHandling = NullValueHandling.Ignore)]
+        public IList<Must> List { get; set; }
     }
 
     public class Must
