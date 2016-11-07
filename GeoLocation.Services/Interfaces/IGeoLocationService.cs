@@ -1,7 +1,9 @@
-﻿namespace GeoLocation.Services.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace GeoLocation.Services.Interfaces
 {
     public interface IGeoLocationService
     {
-        string FetchCountriesByIP(string ip);
+        Task<string> FetchCountriesByIPAsync(string ip, string elasticSearchEndpoint, string elasticSearchIndex, string elasticsearchCountryBlockType, string elasticsearchCountryLocationType);
     }
 }
