@@ -20,16 +20,50 @@ namespace GeoLocation.Services.Models.Elasticsearch
                     {
                         Bool = new Bool
                         {
-                            Must = new Must
+                            MustList = new List<Must>()
                             {
-                                Bool = new Bool
+                                new Must { Range = new Range { network_start_ip = new GreaterThanOrEquals { To = ip } } },
+                                new Must { Range = new Range { network_last_ip = new LessThanOrEquals { From = ip } } }
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+        [JsonProperty("from")]
+        public int From { get; set; }
+
+        [JsonProperty("size")]
+        public int Size { get; set; }
+
+        [JsonProperty("query")]
+        public Query Query { get; set; }
+    }
+
+    public class GeoLiteCountryLocationSearchQuery
+    {
+        public GeoLiteCountryLocationSearchQuery(string geonameId)
+        {
+            this.Size = 200;
+            this.From = 0;
+            this.Query = new Query
+            {
+                Bool = new Bool
+                {
+                    Filter = new Filter
+                    {
+                        Bool = new Bool
+                        {
+                            MustList = new List<Must>()
+                            {
+                                new Must
                                 {
-                                    MustList = new MustList
+                                    Bool = new Bool
                                     {
-                                        List = new List<Must>()
+                                        Should = new Should()
                                         {
-                                            new Must { Range = new Range { network_start_ip = new GreaterThanOrEquals { To = ip } } },
-                                            new Must { Range = new Range { network_last_ip = new LessThanOrEquals { From = ip } } }
+                                            Match = new Match { geoname_id = new MatchField { Query = geonameId, Type = "phrase" } }
                                         }
                                     }
                                 }
@@ -59,9 +93,7 @@ namespace GeoLocation.Services.Models.Elasticsearch
     public class Bool
     {
         [JsonProperty("must", NullValueHandling = NullValueHandling.Ignore)]
-        public Must Must { get; set; }
-
-        public MustList MustList { get; set; }
+        public IList<Must> MustList { get; set; }
 
         [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
         public Filter Filter { get; set; }
@@ -74,12 +106,6 @@ namespace GeoLocation.Services.Models.Elasticsearch
     {
         [JsonProperty("bool", NullValueHandling = NullValueHandling.Ignore)]
         public Bool Bool { get; set; }
-    }
-
-    public class MustList
-    {
-        [JsonProperty("must", NullValueHandling = NullValueHandling.Ignore)]
-        public IList<Must> List { get; set; }
     }
 
     public class Must

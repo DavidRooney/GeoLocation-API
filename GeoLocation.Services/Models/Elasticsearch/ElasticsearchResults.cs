@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace GeoLocation.Services.Models.Elasticsearch
 {
+    // Country Block
     public class ElasticsearchResultsCountryBlock
     {
         [JsonProperty("hits")]
-        public SearchHits Hits { get; set; }
+        public CountryBlockSearchHits Hits { get; set; }
     }
 
-    public class SearchHits
+    public class CountryBlockSearchHits
     {
         [JsonProperty("hits")]
         public IList<ElasticsearchCountryBlockHits> Hits { get; set; }
@@ -22,5 +23,24 @@ namespace GeoLocation.Services.Models.Elasticsearch
     {
         [JsonProperty("_source")]
         public GeoLiteCountryBlock GeoLiteCountryBlockItem { get; set; }
+    }
+
+    // Country Location
+    public class ElasticsearchResultsCountryLocation
+    {
+        [JsonProperty("hits")]
+        public CountryLocationSearchHits Hits { get; set; }
+    }
+
+    public class CountryLocationSearchHits
+    {
+        [JsonProperty("hits")]
+        public IList<ElasticsearchCountryLocationHits> Hits { get; set; }
+    }
+
+    public class ElasticsearchCountryLocationHits
+    {
+        [JsonProperty("_source")]
+        public GeoLiteCountryLocation GeoLiteCountryLocationItem { get; set; }
     }
 }

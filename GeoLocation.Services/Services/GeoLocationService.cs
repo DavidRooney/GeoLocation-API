@@ -28,24 +28,41 @@ namespace GeoLocation.Services.Services
                     return string.Empty;
                 }
 
+                // Fetch Country Block data from elasticsearch
                 List<GeoLiteCountryBlock> resultsList = new List<GeoLiteCountryBlock>();
-
                 var ELQueryCounrtyBlocks = new GeoLiteCountryBlockSearchQuery(ip);
-                var searchJson = JsonConvert.SerializeObject(ELQueryCounrtyBlocks);
-                var api = RestClient.For<IElasticsearchApi>(string.Join("/", elasticSearchEndpoint, elasticSearchIndex, elasticsearchCountryBlockType));
+                var countryBlockSearchJson = JsonConvert.SerializeObject(ELQueryCounrtyBlocks);
+                var apiCountryBlock = RestClient.For<IElasticsearchApi>(string.Join("/", elasticSearchEndpoint, elasticSearchIndex, elasticsearchCountryBlockType));
 
-                var response = await api.SearchAsync(searchJson);
-                if (response.ResponseMessage.StatusCode == HttpStatusCode.NotFound)
+                var countryBlockResponse = await apiCountryBlock.SearchAsync(countryBlockSearchJson);
+                if (countryBlockResponse.ResponseMessage.StatusCode == HttpStatusCode.NotFound)
                 {
                     return string.Empty;
                 }
                 else
                 {
-                    var results = JsonConvert.DeserializeObject<ElasticsearchResultsCountryBlock>(response.GetContent());
+                    var results = JsonConvert.DeserializeObject<ElasticsearchResultsCountryBlock>(countryBlockResponse.StringContent);
                     results.Hits.Hits.Select(result => result.GeoLiteCountryBlockItem).ToList().ForEach(result => resultsList.Add(result));
                 }
 
-                return string.Empty;
+                // Fetch Country Location data from elasticsearch
+                List<GeoLiteCountryLocation> locationList = new List<GeoLiteCountryLocation>();
+                var ELQueryCounrtyLocation = new GeoLiteCountryLocationSearchQuery(resultsList.FirstOrDefault().geoname_id);
+                var countryLocationSearchJson = JsonConvert.SerializeObject(ELQueryCounrtyLocation);
+                var apiCountryLocation = RestClient.For<IElasticsearchApi>(string.Join("/", elasticSearchEndpoint, elasticSearchIndex, elasticsearchCountryLocationType));
+
+                var countryLocationResponse = await apiCountryLocation.SearchAsync(countryLocationSearchJson);
+                if (countryLocationResponse.ResponseMessage.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    var results = JsonConvert.DeserializeObject<ElasticsearchResultsCountryLocation>(countryLocationResponse.StringContent);
+                    results.Hits.Hits.Select(result => result.GeoLiteCountryLocationItem).ToList().ForEach(result => locationList.Add(result));
+                }
+
+                return locationList.FirstOrDefault().country_name;
 
             }
             catch (Exception e)
@@ -53,64 +70,5 @@ namespace GeoLocation.Services.Services
                 return string.Empty;
             }
         }
-
-        //public string FetchCountriesByIP(string ip, string elasticSearchEndpoint, string elasticSearchIndex)
-        //{
-        //    try
-        //    {
-        //        if (!ip.Contains("."))
-        //        {
-        //            return string.Empty;
-        //        }
-
-        //        int intAddress = BitConverter.ToInt32(IPAddress.Parse(ip).GetAddressBytes(), 0);
-        //        // string ipAddress = new IPAddress(BitConverter.GetBytes(intAddress)).ToString(); // convert int back to IP address.
-
-        //        var node = new Uri(elasticSearchEndpoint);
-        //        var settings = new ConnectionSettings(node);
-        //        var client = new ElasticClient(settings);
-        //        var indexSettings = new IndexSettings();
-        //        indexSettings.NumberOfReplicas = 1;
-        //        indexSettings.NumberOfShards = 1;
-
-        //        var countryBlock = client.Search<GeoLiteCountryBlock>(s => s
-        //                                .Query(q => q
-        //                                    .Bool(b => b
-        //                                        .Filter(f => f
-        //                                            .Bool(b1 => b1
-        //                                                .Must(m => m
-        //                                                    .Bool(b2 => b2
-        //                                                        .Must(m1 => m1
-        //                                                            .Range(r => r.Field("network_start_ip").GreaterThanOrEquals(Convert.ToDouble(ip)))
-        //                                                        ).Must(m1 => m1
-        //                                                            .Range(r => r.Field("network_last_ip").LessThanOrEquals(Convert.ToDouble(ip))))))))))
-        //                                .Index(elasticSearchIndex));
-
-        //        var LocationIDs = countryBlock.Hits.Select(h => h.Source.geoname_id);
-        //        List<string> possibleCountries = new List<string>();
-
-        //        foreach (var id in LocationIDs)
-        //        {
-        //            var countryLocation = client.Search<GeoLiteCountryLocation>(s => s
-        //                                .Query(q => q
-        //                                    .Bool(b => b
-        //                                        .Filter(f => f
-        //                                            .Bool(b1 => b1
-        //                                                .Must(m => m
-        //                                                    .Bool(b2 => b2
-        //                                                        .Should(m1 => m1
-        //                                                            .Match(ma => ma.Field("geoname_id").Query(id)))))))))
-        //                                .Index(elasticSearchIndex));
-
-        //            possibleCountries.Add(countryLocation.Hits.Select(h => h.Source.country_name).FirstOrDefault());
-        //        }
-
-        //        return possibleCountries.FirstOrDefault();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return string.Empty;
-        //    }
-        //}
     }
 }
