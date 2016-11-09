@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<IPCollection>
+  <rule>
+    <country>United States</country>
+    <ip>162.243.10.163</ip>
+  </rule>
+  <rule>
+    <country>United States</country>
+    <ip>70.248.28.23</ip>
+  </rule>
+  <rule>
+    <country>United States</country>
+    <ip>97.77.104.22</ip>
+  </rule>
+  <rule>
+    <country>United States</country>
+    <ip>23.91.97.54</ip>
+  </rule>
+</IPCollection>

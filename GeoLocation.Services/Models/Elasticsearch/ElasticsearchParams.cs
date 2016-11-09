@@ -22,8 +22,8 @@ namespace GeoLocation.Services.Models.Elasticsearch
                         {
                             MustList = new List<Must>()
                             {
-                                new Must { Range = new Range { network_start_ip = new GreaterThanOrEquals { To = ip } } },
-                                new Must { Range = new Range { network_last_ip = new LessThanOrEquals { From = ip } } }
+                                new Must { Range = new Range { network_start_ip = new LessThanOrEquals { To = ip } } },
+                                new Must { Range = new Range { network_last_ip = new GreaterThanOrEquals { From = ip } } }
                             }
                         }
                     }
@@ -43,7 +43,7 @@ namespace GeoLocation.Services.Models.Elasticsearch
 
     public class GeoLiteCountryLocationSearchQuery
     {
-        public GeoLiteCountryLocationSearchQuery(string geonameId)
+        public GeoLiteCountryLocationSearchQuery(IEnumerable<string> geonameIds)
         {
             this.Size = 200;
             this.From = 0;
@@ -61,9 +61,9 @@ namespace GeoLocation.Services.Models.Elasticsearch
                                 {
                                     Bool = new Bool
                                     {
-                                        Should = new Should()
+                                        Should = new List<Should>()
                                         {
-                                            Match = new Match { geoname_id = new MatchField { Query = geonameId, Type = "phrase" } }
+                                            
                                         }
                                     }
                                 }
@@ -72,6 +72,11 @@ namespace GeoLocation.Services.Models.Elasticsearch
                     }
                 }
             };
+
+            foreach (var id in geonameIds)
+            {
+                this.Query.Bool.Filter.Bool.MustList.FirstOrDefault().Bool.Should.Add(new Should { Match = new Match { geoname_id = new MatchField { Query = id, Type = "phrase" } } });
+            }
         }
 
         [JsonProperty("from")]
@@ -99,7 +104,7 @@ namespace GeoLocation.Services.Models.Elasticsearch
         public Filter Filter { get; set; }
 
         [JsonProperty("should", NullValueHandling = NullValueHandling.Ignore)]
-        public Should Should { get; set; }
+        public IList<Should> Should { get; set; }
     }
 
     public class Filter
@@ -120,19 +125,19 @@ namespace GeoLocation.Services.Models.Elasticsearch
     public class Range
     {
         [JsonProperty("network_start_ip", NullValueHandling = NullValueHandling.Ignore)]
-        public GreaterThanOrEquals network_start_ip { get; set; }
+        public LessThanOrEquals network_start_ip { get; set; }
 
         [JsonProperty("network_last_ip", NullValueHandling = NullValueHandling.Ignore)]
-        public LessThanOrEquals network_last_ip { get; set; }
+        public GreaterThanOrEquals network_last_ip { get; set; }
     }
 
     public class GreaterThanOrEquals
     {
-        [JsonProperty("to", NullValueHandling = NullValueHandling.Ignore)]
-        public string To { get; set; }
+        [JsonProperty("from", NullValueHandling = NullValueHandling.Ignore)]
+        public string From { get; set; }
 
-        [JsonProperty("from")]
-        public string From { get { return null; } }
+        [JsonProperty("to")]
+        public string To { get { return null; } }
 
         [JsonProperty("include_lower")]
         public bool Include_lower { get { return true; } }
@@ -143,11 +148,11 @@ namespace GeoLocation.Services.Models.Elasticsearch
 
     public class LessThanOrEquals
     {
-        [JsonProperty("from", NullValueHandling = NullValueHandling.Ignore)]
-        public string From { get; set; }
+        [JsonProperty("to", NullValueHandling = NullValueHandling.Ignore)]
+        public string To { get; set; }
 
-        [JsonProperty("to")]
-        public string To { get { return null; } }
+        [JsonProperty("from")]
+        public string From { get { return null; } }
 
         [JsonProperty("include_lower")]
         public bool Include_lower { get { return true; } }

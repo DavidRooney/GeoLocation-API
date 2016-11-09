@@ -47,7 +47,7 @@ namespace GeoLocation.Services.Services
 
                 // Fetch Country Location data from elasticsearch
                 List<GeoLiteCountryLocation> locationList = new List<GeoLiteCountryLocation>();
-                var ELQueryCounrtyLocation = new GeoLiteCountryLocationSearchQuery(resultsList.FirstOrDefault().geoname_id);
+                var ELQueryCounrtyLocation = new GeoLiteCountryLocationSearchQuery(resultsList.Select(r => r.geoname_id));
                 var countryLocationSearchJson = JsonConvert.SerializeObject(ELQueryCounrtyLocation);
                 var apiCountryLocation = RestClient.For<IElasticsearchApi>(string.Join("/", elasticSearchEndpoint, elasticSearchIndex, elasticsearchCountryLocationType));
 
@@ -62,7 +62,7 @@ namespace GeoLocation.Services.Services
                     results.Hits.Hits.Select(result => result.GeoLiteCountryLocationItem).ToList().ForEach(result => locationList.Add(result));
                 }
 
-                return locationList.FirstOrDefault().country_name;
+                return string.Join("|", locationList.Select(r => r.country_name));
 
             }
             catch (Exception e)
