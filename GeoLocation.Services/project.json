@@ -1,6 +1,5 @@
 {
   "version": "1.0.0-*",
-
   "dependencies": {
     "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0-rc2-final",
     "Microsoft.Extensions.Configuration": "1.0.0-rc2-final",
@@ -12,10 +11,12 @@
     "RestEase": "1.2.3",
     "System.Net.Http": "4.1.0"
   },
-
   "frameworks": {
     "netstandard1.5": {
       "imports": "dnxcore50"
     }
+  },
+  "configurations": {
+    "Development": {}
   }
 }

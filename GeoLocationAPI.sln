@@ -14,23 +14,32 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Development|Any CPU = Development|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FD97A37A-C0CF-426D-8D1F-6C02E3319245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FD97A37A-C0CF-426D-8D1F-6C02E3319245}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD97A37A-C0CF-426D-8D1F-6C02E3319245}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{FD97A37A-C0CF-426D-8D1F-6C02E3319245}.Development|Any CPU.Build.0 = Development|Any CPU
 		{FD97A37A-C0CF-426D-8D1F-6C02E3319245}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD97A37A-C0CF-426D-8D1F-6C02E3319245}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DC5CB30-D617-44C0-A732-B29BA99E07DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DC5CB30-D617-44C0-A732-B29BA99E07DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DC5CB30-D617-44C0-A732-B29BA99E07DA}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{0DC5CB30-D617-44C0-A732-B29BA99E07DA}.Development|Any CPU.Build.0 = Development|Any CPU
 		{0DC5CB30-D617-44C0-A732-B29BA99E07DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DC5CB30-D617-44C0-A732-B29BA99E07DA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6FE92BB8-E4A3-4D86-A7E6-0FC57A435622}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6FE92BB8-E4A3-4D86-A7E6-0FC57A435622}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE92BB8-E4A3-4D86-A7E6-0FC57A435622}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{6FE92BB8-E4A3-4D86-A7E6-0FC57A435622}.Development|Any CPU.Build.0 = Development|Any CPU
 		{6FE92BB8-E4A3-4D86-A7E6-0FC57A435622}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FE92BB8-E4A3-4D86-A7E6-0FC57A435622}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D167C406-8936-45DC-B95C-C47DA4E769F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D167C406-8936-45DC-B95C-C47DA4E769F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D167C406-8936-45DC-B95C-C47DA4E769F5}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{D167C406-8936-45DC-B95C-C47DA4E769F5}.Development|Any CPU.Build.0 = Development|Any CPU
 		{D167C406-8936-45DC-B95C-C47DA4E769F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D167C406-8936-45DC-B95C-C47DA4E769F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

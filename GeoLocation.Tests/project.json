@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "testRunner": "xunit",
   "dependencies": {
@@ -8,7 +8,6 @@
     "xunit": "2.2.0-beta4-build3444",
     "xunit.runners": "2.0.0"
   },
-
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {
@@ -18,5 +17,8 @@
         }
       }
     }
+  },
+  "configurations": {
+    "Development": {}
   }
 }

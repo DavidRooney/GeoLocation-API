@@ -20,7 +20,11 @@ namespace GeoLocation.Importer.Processors
         public GeoLite2CountryBlockProcessor(IEnumerable<GeoLite2CountryBlockDefinition> modelList)
         {
             this.ModelList = modelList;
+#if DEV
+            this.elasticSearchEndpoint = ConfigurationManager.AppSettings["ElasticSearchEndpoint_Dev"];
+#else
             this.elasticSearchEndpoint = ConfigurationManager.AppSettings["ElasticSearchEndpoint"];
+#endif
             this.elasticSearchDocumentGeoLiteCountryBlockUri = ConfigurationManager.AppSettings["ElasticSearchDocumentGeoLiteCountryBlockUri"];
         }
 
