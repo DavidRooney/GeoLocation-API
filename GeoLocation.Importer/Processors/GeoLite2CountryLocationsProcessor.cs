@@ -20,7 +20,12 @@ namespace GeoLocation.Importer.Processors
 
         public GeoLite2CountryLocationsProcessor()
         {
+#if DEV
+            this.elasticSearchEndpoint = ConfigurationManager.AppSettings["ElasticSearchEndpoint_Dev"];
+#else
             this.elasticSearchEndpoint = ConfigurationManager.AppSettings["ElasticSearchEndpoint"];
+#endif
+
             this.elasticSearchDocumentGeoLiteCountryLocationUri = ConfigurationManager.AppSettings["ElasticSearchDocumentGeoLiteCountryLocationUri"];
             this.elasticSearchDocumentGeoLiteIndexUri = ConfigurationManager.AppSettings["ElasticSearchDocumentGeoLiteIndexUri"];
         }

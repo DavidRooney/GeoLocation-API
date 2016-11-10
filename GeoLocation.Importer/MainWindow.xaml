@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GeoLocation.Importer"
+        xmlns:local="clr-namespace:GeoLocation.Importer.Controls"
         mc:Ignorable="d"
         Title="Geo Location Importer" Height="450" Width="800">
     <DockPanel Margin="10">
@@ -26,6 +26,15 @@
         <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
             <TextBox Name="txtImportMessage" Width="700" Height="20" BorderThickness="0" TextAlignment="Center" />
         </WrapPanel>
+        <!--<WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
+            <Viewbox    Name="ProgressBar"
+                        Width="200" Height="200"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Visibility="Collapsed">
+                <local:CircularProgressBar />
+            </Viewbox>
+        </WrapPanel>-->
         <Border CornerRadius="6"
                 BorderBrush="Gray"
                 Background="IndianRed"

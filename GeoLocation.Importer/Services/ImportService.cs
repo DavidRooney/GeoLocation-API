@@ -16,6 +16,7 @@ namespace GeoLocation.Importer.Services
         public bool RunImport(string fileToImport, ImportOptionEnum importOption, out string message)
         {
             var success = false;
+            message = string.Empty;
 
             try
             {
@@ -23,19 +24,17 @@ namespace GeoLocation.Importer.Services
                 {
                     case ImportOptionEnum.GeoLite2CountryLocations:
                         success = this.GeoLite2CountryLocationsImport(fileToImport);
+                        message = "Locations: File successfully imported!";
                         break;
                     case ImportOptionEnum.GeoLite2CountryBlocks:
                         success = this.GeoLite2CountryBlockImport(fileToImport);
+                        message = "Blocks: File successfully imported!";
                         break;
                     default:
                         break;
                 }
 
-                if (success)
-                {
-                    message = "File successfully imported!";
-                }
-                else
+                if (!success)
                 {
                     message = "An Error Occurred importing the file!";
                 }
