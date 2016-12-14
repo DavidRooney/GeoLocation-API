@@ -12,6 +12,7 @@ namespace GeoLocation.API
     {
         public static void Main(string[] args)
         {
+            // load
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
